@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ainhoa López Perelló — Blockchain Security Engineer</title>
+<meta name="description" content="Ainhoa López Perelló — Blockchain Engineer and smart contract security. CISO | Blockchain Lead &amp; Co-founder at HackChain, Founder &amp; CTO at Verity Protocol. Interactive terminal portfolio.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://noahlp125.github.io/">
+<meta property="og:title" content="Ainhoa López Perelló — Secure the chain">
+<meta property="og:description" content="Blockchain Engineer · Smart Contract Security · Security Audit. Boot the terminal, run the exploit, find the flag.">
+<meta property="og:image" content="https://noahlp125.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23040705'/%3E%3Ctext x='4' y='23' font-family='monospace' font-size='18' font-weight='700' fill='%2339FF7A'%3E%3E_%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#040705}
+a{color:#39FF7A}a:hover{color:#D7FFE4}
+.root{position:relative;min-height:100vh;background:#040705;color:#39FF7A;font-family:'JetBrains Mono',ui-monospace,monospace;overflow:hidden;background-image:radial-gradient(circle at 50% 50%,rgba(57,255,122,.18) 1px,transparent 1.5px),linear-gradient(rgba(57,255,122,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,122,.045) 1px,transparent 1px);background-size:96px 96px,48px 48px,48px 48px}
+.crt::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65));animation:fl 6s infinite}
+@keyframes fl{0%,100%{opacity:1}48%{opacity:.92}50%{opacity:.75}52%{opacity:.95}}
+.glow{text-shadow:0 0 6px rgba(57,255,122,.75),0 0 22px rgba(57,255,122,.35)}
+.g1,.g2{position:absolute;inset:0;pointer-events:none}
+.g1{color:#00FFC6;animation:ga 4s infinite steps(1)}.g2{color:#B6FF3A;animation:gb 4s infinite steps(1)}
+@keyframes ga{0%,88%,100%{clip-path:inset(100% 0 0 0)}90%{clip-path:inset(10% 0 70% 0);transform:translate(-6px,0)}93%{clip-path:inset(55% 0 20% 0);transform:translate(5px,0)}}
+@keyframes gb{0%,89%,100%{clip-path:inset(100% 0 0 0)}91%{clip-path:inset(35% 0 45% 0);transform:translate(7px,0)}95%{clip-path:inset(75% 0 5% 0);transform:translate(-4px,0)}}
+.in{opacity:0;animation:show .01s linear forwards}@keyframes show{to{opacity:1}}
+.blink{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.acc{min-height:56px;padding:0 36px;background:transparent;border:1px solid #39FF7A;color:#39FF7A;font-family:'JetBrains Mono',monospace;font-size:18px;letter-spacing:.18em;cursor:pointer;transition:all .15s}
+.acc:hover,.acc:focus-visible{background:#39FF7A;color:#040705;box-shadow:0 0 32px rgba(57,255,122,.6);text-shadow:none}
+.nav{background:none;border:0;padding:12px 4px;min-height:44px;color:#39FF7A;font:inherit;letter-spacing:.1em;cursor:pointer}
+.nav:hover,.nav:focus-visible{color:#D7FFE4}
+.chip{min-height:36px;padding:0 12px;background:transparent;border:1px solid #14402A;color:#7FD9A0;font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer}
+.chip:hover,.chip:focus-visible{background:#0F2A18;border-color:#39FF7A}
+.cmd{flex:1;min-width:0;min-height:32px;background:transparent;border:0;color:#D7FFE4;font:inherit;padding:0;caret-color:#39FF7A}.cmd:focus{outline:none}
+.panel{border:1px solid #14402A;background:rgba(4,7,5,.9)}
+.stat p{margin:0}.stat .v{margin:2px 0 0;font-size:28px;font-family:'Space Mono',monospace;font-weight:700}
+.hidden{display:none !important}
+.ln{white-space:pre-wrap;word-break:break-word}
+@media (max-width:640px){.log{font-size:12px !important}.cmd{font-size:16px}}
+@media (prefers-reduced-motion:reduce){.crt::after,.g1,.g2,.blink{animation:none}.g1,.g2{display:none}}
+</style>
+</head>
+<body>
+<div class="root crt">
+
+<!-- BOOT -->
+<div id="boot" style="position:relative;min-height:100vh;display:flex;flex-direction:column;box-sizing:border-box;padding:24px clamp(16px,3vw,32px)">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px;font-size:11px;letter-spacing:.08em;position:relative;z-index:2">
+<div style="display:flex;flex-direction:column;gap:4px;color:#2FD066">
+<span>SYSTEM STATUS: <span class="glow" style="color:#39FF7A">ONLINE</span></span>
+<span>NODE: ALBACETE.ES</span>
+<span>UTC <span class="clock">--:--:--</span></span>
+</div>
+<nav aria-label="Quick commands" style="display:flex;flex-wrap:wrap;gap:clamp(12px,4vw,56px)">
+<button class="nav" data-go="recruiter" style="color:#00FFC6">RECRUITER?</button>
+<button class="nav" data-go="whoami">WHOAMI</button>
+<button class="nav" data-go="ls">PROJECTS</button>
+<button class="nav" data-go="contact">CONTACT</button>
+</nav>
+<div aria-hidden="true" style="display:grid;grid-template-columns:repeat(6,8px);gap:3px"><span style="height:8px;background:#39FF7A"></span><span style="height:8px;background:#39FF7A"></span><span style="height:8px;background:#39FF7A"></span><span style="height:8px;background:#2FD066"></span><span style="height:8px;background:#1F8A47"></span><span style="height:8px;background:#39FF7A"></span><span></span><span></span><span></span><span></span><span></span><span style="height:8px;background:#1F8A47"></span></div>
+</div>
+<div aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;font-family:'Space Mono',monospace;font-weight:700;font-size:clamp(120px,26vw,400px);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(57,255,122,.14);white-space:nowrap">0xA1N</div>
+<main style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;z-index:2;padding:48px 0">
+<p class="glow" style="margin:0 0 24px;font-size:13px;letter-spacing:.3em;color:#2FD066">// AINHOA LÓPEZ PERELLÓ</p>
+<h1 class="glow" style="position:relative;margin:0;font-family:'Space Mono',monospace;font-weight:700;font-size:clamp(52px,9.5vw,132px);line-height:.95;letter-spacing:-.02em;color:#39FF7A">SECURE<br>THE<br>CHAIN<span class="g1" aria-hidden="true">SECURE<br>THE<br>CHAIN</span><span class="g2" aria-hidden="true">SECURE<br>THE<br>CHAIN</span></h1>
+<div style="margin-top:32px;display:flex;flex-direction:column;gap:6px;font-size:15px;text-align:left;color:#7FD9A0;max-width:92vw">
+<span class="in" style="animation-delay:300ms">&gt; CISO | Blockchain Lead &amp; Co-founder @ HackChain</span>
+<span class="in" style="animation-delay:600ms">&gt; Founder &amp; CTO @ Verity Protocol</span>
+<span class="in" style="animation-delay:900ms">&gt; Initializing secure shell...</span>
+<span class="in" style="animation-delay:1200ms;color:#00FFC6">&gt; Open to: Blockchain Engineer · Blockchain Security Engineer · Security Audit</span>
+<span class="in glow" style="animation-delay:1600ms;color:#39FF7A">&gt; Ready.<span class="blink">█</span></span>
+</div>
+<div style="width:min(360px,80%);height:1px;background:linear-gradient(90deg,transparent,#1F8A47,transparent);margin:40px 0 32px"></div>
+<button class="acc glow" id="access">[ ACCESS TERMINAL ]</button>
+<p style="margin:18px 0 0;font-size:12px;color:#2FD066;letter-spacing:.1em">12 PUBLIC REPOS · 16 STARS · 4 FORKS — SOURCE: github.com/Noahlp125</p>
+</main>
+<div aria-hidden="true" style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:2">
+<div style="display:flex;gap:3px"><span style="width:8px;height:8px;background:#39FF7A"></span><span style="width:8px;height:8px;background:#39FF7A"></span><span style="width:8px;height:8px;background:#2FD066"></span><span style="width:8px;height:8px;background:#1F8A47"></span></div>
+<span style="font-size:11px;color:#2FD066;letter-spacing:.1em">v2.0.26 · BUILD ALP</span>
+<div style="display:flex;gap:3px"><span style="width:8px;height:8px;background:#1F8A47"></span><span style="width:8px;height:8px;background:#2FD066"></span><span style="width:8px;height:8px;background:#39FF7A"></span><span style="width:8px;height:8px;background:#39FF7A"></span></div>
+</div>
+</div>
+
+<!-- TERMINAL -->
+<div id="term" class="hidden" style="min-height:100vh;box-sizing:border-box;padding:clamp(12px,2.5vw,28px);display:flex;flex-direction:column;gap:16px;position:relative;z-index:2">
+<div class="panel" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;font-size:12px;color:#2FD066;padding:10px 16px">
+<span>ainhoa@sec-node: ~ — zsh — encrypted session</span>
+<span>UTC <span class="clock">--:--:--</span> · <span class="glow" style="color:#39FF7A">● CONNECTED</span></span>
+<button class="nav" id="logout" style="color:#2FD066;padding:0 4px">[ logout ]</button>
+</div>
+<div style="flex:1;display:flex;flex-wrap:wrap;gap:16px;min-height:0">
+<section aria-label="Terminal" class="panel" style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column">
+<div id="log" class="log" role="log" aria-live="polite" style="height:clamp(380px,calc(100vh - 250px),1200px);overflow-y:auto;padding:20px 22px 8px;font-size:14px;line-height:1.6">
+<div id="lines"></div>
+<div id="prompt" style="display:flex;align-items:center;margin-top:4px">
+<label for="cmd" class="glow" style="white-space:pre;color:#39FF7A">ainhoa@sec-node<span style="color:#D7FFE4">:</span><span style="color:#00FFC6">~</span><span style="color:#D7FFE4">$ </span></label>
+<input id="cmd" class="cmd glow" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Type a command, for example help">
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid #14402A">
+<span id="quickRun" style="font-size:11px;color:#2FD066;align-self:center;letter-spacing:.1em;margin-right:4px">QUICK RUN:</span>
+<span id="chips" style="display:contents"></span>
+</div>
+</section>
+<aside aria-label="System monitor" style="flex:1 1 260px;display:flex;flex-direction:column;gap:16px;font-size:12px">
+<div class="panel" style="padding:16px">
+<p style="margin:0 0 14px;color:#2FD066;letter-spacing:.12em">LANG_MAP // public repos</p>
+<div id="langs"></div>
+</div>
+<div class="panel" style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+<div class="stat"><p style="color:#2FD066">REPOS</p><p class="v glow">12</p></div>
+<div class="stat"><p style="color:#2FD066">STARS</p><p class="v glow">16</p></div>
+<div class="stat"><p style="color:#2FD066">FORKS</p><p class="v glow">4</p></div>
+<div class="stat"><p style="color:#2FD066">CMDS RUN</p><p class="v glow" id="runs">0</p></div>
+</div>
+<div class="panel" style="padding:16px;display:flex;flex-direction:column;gap:8px">
+<p style="margin:0 0 6px;color:#2FD066;letter-spacing:.12em">ACTIVE_PROCESSES</p>
+<span class="glow">▸ CISO | Blockchain Lead @ HackChain</span>
+<span class="glow">▸ Co-founder @ HackChain</span>
+<span class="glow">▸ Founder &amp; CTO @ Verity Protocol</span>
+<span>▸ SecOps @ OH Casas Modulares</span>
+<span style="color:#FFB547">▸ MSc DeFi Sec ...... compiling</span>
+<span style="color:#FFB547">▸ 中文 A1 ........... learning</span>
+<span style="color:#00FFC6">▸ Sherlock bounties . queued</span>
+</div>
+<p style="margin:0;color:#2FD066;line-height:1.6">tip: try <span style="color:#39FF7A">exploit</span>, <span style="color:#39FF7A">lang es</span> or <span style="color:#39FF7A">sudo hire-me</span>. Some files are hidden. ↑ recalls history, Tab completes.</p>
+</aside>
+</div>
+</div>
+</div>
+
+<script>
+class Portfolio {
+  constructor(p) {
+    this.state = { screen: 'boot', lines: [], input: '', hist: [], hIdx: -1, runs: 0, now: new Date(), promptDelay: 0, lang: 'en' };
+    this.SECRET = 'ZmxhZ3tyZWVudHJhbmN5X2lzX2Ffc3RhdGVfb2ZfbWluZH0gOjogeW91IGZvdW5kIGl0LiBlbWFpbCBub2FoODQwNDhAZ21haWwuY29tIHdpdGggdGhpcyBmbGFnIGluIHRoZSBzdWJqZWN0Lg==';
+    this.LI = 'https://www.linkedin.com/in/ainhoa-l%C3%B3pez-perell%C3%B3-2351b72ba';
+    this.AUDIT = 'https://github.com/Noahlp125/sistema-votacion-solidity/blob/main/SECURITY-AUDIT.md';
+  }
+  repos() {
+    const T = (a, b) => this.T(a, b);
+    return [
+      { n: 'hackchain-token-contracts', l: 'Solidity', meta: '★1 · 4 forks', d: T('$HACK token system for the HackChain presale: mechanism contracts on OpenZeppelin v5, live on Polygon Mainnet, run through an internal audit and an external ERC-20 audit, then remediated.', 'Sistema del token $HACK para la preventa de HackChain: contratos de mecanismos sobre OpenZeppelin v5, en Polygon Mainnet, pasados por una auditoría interna y una externa ERC-20 y remediados.') },
+      { n: 'onchain-sentinel', l: 'TypeScript', meta: T('in development · private', 'en desarrollo · privado'), noLink: true, d: T('Started at ETHOnline 2026, now built solo. AI security copilot for Web3: analyses on-chain transactions and token approvals and explains the risk in plain language before you sign. The risk score is deterministic; Claude only explains it, never decides it. Stack: Next.js · wagmi/viem · The Graph · Claude API · Solidity + Foundry.', 'Empezado en ETHOnline 2026, ahora lo construyo sola. Copiloto de seguridad Web3 con IA: analiza transacciones y aprobaciones on-chain y explica el riesgo en lenguaje claro antes de firmar. El score es determinista; Claude solo lo explica, nunca lo decide. Stack: Next.js · wagmi/viem · The Graph · Claude API · Solidity + Foundry.') },
+      { n: 'sistema-votacion-solidity', l: 'Solidity', meta: T('★1 · audited', '★1 · auditado'), dep: [['SistemaVotacion', '0x9d5CaF3B81B2588e9568B2a025C9b306187920E1']], d: T('Voting contract in Solidity 0.8.34 on Sepolia: voter whitelist, candidate registration, time-limited voting and ETH payments. Ships with a full security audit (5 findings) and a working reentrancy PoC. Run: audit · exploit', 'Contrato de votación en Solidity 0.8.34 en Sepolia: whitelist de votantes, registro de candidatos, votación con plazo y pagos en ETH. Incluye auditoría completa (5 hallazgos) y una PoC de reentrancy funcional. Ejecuta: audit · exploit') },
+      { n: 'cryptobank-solidity', l: 'Solidity', meta: 'DeFi · Sepolia', dep: [['CryptoBank', '0x845929171Ef83d76043a29A534C0aff4C82C7816'], ['ALP Token', '0xF3a2d316A3B16A112564E46419fe007EDFB7A068']], d: T('Decentralised bank in Solidity 0.8.34, two contracts on Sepolia. Deposit ETH and get ALP tokens (1 ETH = 1000 ALP, minted and burned by the bank), 5% annual interest, loans with 150% ETH collateral repaid at 10%, 1 ETH daily withdrawal limit, owner/admin roles and an emergency pause.', 'Banco descentralizado en Solidity 0.8.34, dos contratos en Sepolia. Depositas ETH y recibes ALP (1 ETH = 1000 ALP, acuñados y quemados por el banco), 5% de interés anual, préstamos con 150% de colateral en ETH devueltos al 10%, límite de retirada de 1 ETH diario, roles owner/admin y pausa de emergencia.') },
+      { n: 'auditstake', l: 'TypeScript', meta: 'defi · foundry · wagmi', d: T("Auditor staking with slashing: auditors back a protocol's security with their own stake. Solidity + Foundry + Next.js, deployed on Sepolia.", 'Staking de auditores con slashing: los auditores respaldan la seguridad de un protocolo con su propio stake. Solidity + Foundry + Next.js, desplegado en Sepolia.') },
+      { n: 'foundry-exploit-lab', l: 'Solidity', meta: '★1', d: T('Foundry test suite reproducing four historical exploit classes: DAO-style reentrancy, Parity-style access control, ERC-4626 inflation attack and Harvest/bZx-style oracle manipulation, each with a vulnerable and a corrected contract.', 'Suite de tests en Foundry que reproduce cuatro clases de exploit históricas: reentrancy tipo DAO, control de acceso tipo Parity, ataque de inflación ERC-4626 y manipulación de oráculo tipo Harvest/bZx, cada una con contrato vulnerable y corregido.') },
+      { n: 'esp32-ghost', l: 'C++', meta: 'hardware', d: T('Pocket WiFi auditing device on an ESP32-S3 with OLED: flags open networks and possible evil twins. Sub-GHz, NFC and IR modules on the way.', 'Dispositivo de bolsillo de auditoría WiFi en ESP32-S3 con OLED: detecta redes abiertas y posibles evil twins. Módulos sub-GHz, NFC e IR en camino.') },
+      { n: 'CRT-Albitrum-Cripto', l: 'Solidity', meta: '★1 · Arbitrum One', d: T('First ERC-20 contract, deployed on Arbitrum One mainnet.', 'Primer contrato ERC-20, desplegado en Arbitrum One mainnet.') },
+      { n: 'Web-Security-Audit-on-DVWA', l: 'Report', meta: 'web', d: T('Web security audit of DVWA in a Docker + Kali Linux lab with Burp Suite and OWASP ZAP, findings documented.', 'Auditoría de seguridad web de DVWA en un laboratorio Docker + Kali Linux con Burp Suite y OWASP ZAP, con los hallazgos documentados.') }
+    ];
+  }
+  T(en, es) { return this.state.lang === 'es' ? es : en; }
+  L(t, c, extra) {
+    const col = { g: '#39FF7A', d: '#2FD066', w: '#D7FFE4', m: '#7FD9A0', a: '#FFB547', r: '#FF6B6B', c: '#00FFC6' }[c || 'm'];
+    return Object.assign({ t: t, c: col }, extra || {});
+  }
+  gh(name) { return 'https://github.com/Noahlp125/' + name; }
+  bar(v, max, w) { const n = Math.round(v / max * w); return '█'.repeat(n) + '░'.repeat(w - n); }
+  run(raw) {
+    const cmd = (raw || '').trim();
+    const L = (t, c, e) => this.L(t, c, e);
+    const T = (a, b) => this.T(a, b);
+    const out = [];
+    const parts = cmd.split(/\s+/);
+    const head = parts[0] || '';
+    const arg = parts.slice(1).join(' ');
+    const k = head.toLowerCase();
+    const R = this.repos();
+    const LI = this.LI;
+    if (!cmd) { }
+    else if (k === 'help') {
+      out.push(L(T('AVAILABLE COMMANDS', 'COMANDOS DISPONIBLES'), 'g'));
+      [['recruiter', T('30-second brief, start here', 'resumen de 30 segundos, empieza aquí')], ['whoami', T('who is behind this shell', 'quién hay detrás de esta shell')], ['neofetch', T('system info, the pretty way', 'info del sistema, versión bonita')], ['ls', T('list public projects (from GitHub)', 'lista de proyectos públicos (de GitHub)')], ['cat <name|n>', T('open a project, e.g. cat 3', 'abre un proyecto, p. ej. cat 3')], ['experience', T('roles currently running', 'roles en ejecución')], ['skills', T('toolchain', 'herramientas')], ['certs', T('certifications', 'certificaciones')], ['writing', T('published articles', 'artículos publicados')], ['events', T('talks and hackathons', 'charlas y hackathons')], ['languages', T('human languages spoken', 'idiomas')], ['audit', T('replay my audit of SistemaVotacion.sol', 'repite mi auditoría de SistemaVotacion.sol')], ['exploit', T('watch a reentrancy attack drain a vault, then fail', 'mira un ataque de reentrancy vaciar un vault y luego fallar')], ['bounties', T('bug bounty status', 'estado de bug bounties')], ['cv', T('download my CV', 'descarga mi CV')], ['contact', T('open a channel', 'abre un canal')], ['lang es | lang en', T('switch language', 'cambia el idioma')], ['sudo hire-me', T('you know what this does', 'ya sabes lo que hace')], ['clear', T('clear the screen', 'limpia la pantalla')], ['exit', T('back to the boot screen', 'vuelve a la pantalla de inicio')]]
+        .forEach((x) => out.push(L('  ' + x[0].padEnd(18, ' ') + x[1], 'm')));
+    }
+    else if (k === 'lang') {
+      const to = (arg || '').toLowerCase();
+      if (to === 'es' || to === 'en') { this.pendingLang = to; out.push(L(to === 'es' ? 'idioma: español ✓ — escribe help' : 'language: English ✓ — type help', 'g')); }
+      else out.push(L(T('usage: lang es | lang en', 'uso: lang es | lang en'), 'a'));
+    }
+    else if (k === 'recruiter' || k === 'brief') {
+      out.push(L(T('RECRUITER MODE · 30-second brief', 'MODO RECLUTADOR · resumen de 30 segundos'), 'g'));
+      out.push(L(' ', 'm'));
+      out.push(L(T('ROLE    ', 'BUSCO   ') + 'Blockchain Engineer · Blockchain Security Engineer · Security Audit', 'c'));
+      out.push(L(T('NOW     ', 'AHORA   ') + 'CISO | Blockchain Lead & Co-founder @ HackChain · Founder & CTO @ Verity Protocol', 'w'));
+      out.push(L(T('BASE    Albacete, Spain · open to relocation', 'BASE    Albacete, España · abierta a reubicación'), 'w'));
+      out.push(L(T('LANGS   Spanish native · English B2 (C1 in progress)', 'IDIOMAS español nativo · inglés B2 (C1 en curso)'), 'w'));
+      out.push(L(' ', 'm'));
+      out.push(L(T('PROOF', 'PRUEBAS'), 'g'));
+      out.push(L(T('  [1] Smart contracts for the $HACK token ecosystem, live on Polygon Mainnet', '  [1] Smart contracts del ecosistema del token $HACK, en Polygon Mainnet'), 'w'));
+      out.push(L('hackchain-token-contracts', 'g', { pre: '      ↗ ', href: this.gh('hackchain-token-contracts') }));
+      out.push(L(T('  [2] Security audit with a working reentrancy PoC on Sepolia (1 critical, remediated)', '  [2] Auditoría de seguridad con PoC de reentrancy funcional en Sepolia (1 crítico, remediado)'), 'w'));
+      out.push(L('SECURITY-AUDIT.md', 'g', { pre: '      ↗ ', href: this.AUDIT }));
+      out.push(L(T('  [3] Four historical exploit classes reproduced and fixed in Foundry', '  [3] Cuatro clases de exploit históricas reproducidas y corregidas en Foundry'), 'w'));
+      out.push(L('foundry-exploit-lab', 'g', { pre: '      ↗ ', href: this.gh('foundry-exploit-lab') }));
+      out.push(L(' ', 'm'));
+      out.push(L(T('NEXT STEP', 'SIGUIENTE PASO'), 'g'));
+      out.push(L('noah84048@gmail.com', 'g', { pre: '  email     ✉ ', href: 'mailto:noah84048@gmail.com' }));
+      out.push(L('linkedin.com/in/ainhoa-lópez-perelló', 'g', { pre: '  linkedin  ↗ ', href: LI }));
+      out.push(L('Ainhoa_Lopez_Perello_CV.pdf', 'g', { pre: '  cv        ↗ ', href: 'Ainhoa_Lopez_Perello_CV.pdf' }));
+    }
+    else if (k === 'whoami') {
+      out.push(L('Ainhoa López Perelló', 'g'));
+      out.push(L('▸ CISO | Blockchain Lead & Co-founder — HackChain', 'g'));
+      out.push(L('▸ Founder & CTO — Verity Protocol', 'g'));
+      out.push(L(T('  neutral cryptographic infrastructure for verifiable provenance of digital media, from capture', '  infraestructura criptográfica neutral para la procedencia verificable de medios digitales, desde la captura'), 'm'));
+      out.push(L(' ', 'm'));
+      out.push(L(T('I design, build and audit Solidity systems end to end: token mechanisms', 'Diseño, construyo y audito sistemas en Solidity de principio a fin: mecanismos'), 'w'));
+      out.push(L(T('running on Polygon mainnet, DeFi protocols, exploit PoCs, and audit reports', 'de token en Polygon mainnet, protocolos DeFi, PoCs de exploits e informes de'), 'w'));
+      out.push(L(T('a team can actually act on.', 'auditoría con los que un equipo puede actuar.'), 'w'));
+      out.push(L(' ', 'm'));
+      out.push(L(T('SEEKING  ', 'BUSCO    ') + 'Blockchain Engineer · Blockchain Security Engineer · Security Audit', 'c'));
+      out.push(L(T('BASE     Albacete, Spain · open to relocation', 'BASE     Albacete, España · abierta a reubicación'), 'm'));
+    }
+    else if (k === 'neofetch') {
+      const art = ['   ▄▀▀▀▄   ', '  █  ▲  █  ', '  █ ▄█▄ █  ', '  █▀   ▀█  ', '  ▀█▄▄▄█▀  ', '   0xA1N   ', '           ', '           '];
+      const info = [['', 'ainhoa@sec-node'], ['OS', 'SecurityOS (Web3 edition)'], ['HackChain', 'Co-founder & CISO'], ['Verity', 'Founder & CTO'], ['Shell', 'zsh + foundry'], ['Langs', 'Solidity, TS, JS, Python, C++'], ['Certs', 'CRTOM, CCST'], [T('Seeking', 'Busco'), 'Blockchain (Security) Eng · Audit']];
+      info.forEach((r, i) => out.push(L(art[i] + '  ' + (r[0] ? r[0] + ': ' : '') + r[1], i === 0 ? 'g' : 'm', { delay: i * 70, hang: true })));
+      out.push(L('             ███████████████████', 'g', { delay: 630 }));
+    }
+    else if (k === 'ls' || k === 'projects') {
+      if (arg === '-a' || arg === '-la' || arg === '-al') {
+        out.push(L('.  ..  .secret', 'a'));
+        out.push(L(T('→ cat .secret', '→ cat .secret'), 'd'));
+      } else {
+        out.push(L('total ' + R.length + '  (source: github.com/Noahlp125)', 'd'));
+        R.forEach((r, i) => out.push(L(String(i + 1).padStart(2, ' ') + '  ' + r.n.padEnd(28, ' ') + r.l.padEnd(12, ' ') + r.meta, i < 4 ? 'g' : 'm', { delay: i * 60 })));
+        out.push(L(T('→ cat <number> for details', '→ cat <número> para ver detalles'), 'd', { delay: R.length * 60 }));
+      }
+    }
+    else if (cmd === 'cat .secret | base64 -d' || cmd === 'cat .secret | base64 --decode') {
+      out.push(L(atob(this.SECRET), 'c'));
+      out.push(L(T('★ nice. not many people get here.', '★ bien hecho. poca gente llega hasta aquí.'), 'g'));
+    }
+    else if ((k === 'cat' || k === 'open') && arg === '.secret') {
+      out.push(L(this.SECRET, 'a'));
+      out.push(L(T('hint: it is base64. pipes work here.', 'pista: es base64. aquí funcionan las tuberías.'), 'd'));
+    }
+    else if ((k === 'base64' && parts[1] === '-d') || k === 'decode') {
+      const s = k === 'decode' ? arg : parts.slice(2).join(' ');
+      try { out.push(L(atob(s), 'c')); if (s === this.SECRET) out.push(L(T('★ nice. not many people get here.', '★ bien hecho. poca gente llega hasta aquí.'), 'g')); }
+      catch (e) { out.push(L('base64: invalid input', 'r')); }
+    }
+    else if (k === 'cat' || k === 'open') {
+      const n = parseInt(arg, 10);
+      const r = !isNaN(n) ? R[n - 1] : R.find((x) => x.n.toLowerCase() === arg.toLowerCase());
+      if (!r) out.push(L('cat: ' + (arg || '<missing>') + T(': no such project. Try ls', ': no existe ese proyecto. Prueba ls'), 'r'));
+      else {
+        out.push(L('┌─ ' + r.n, 'g'));
+        out.push(L('│ lang: ' + r.l + '   ' + r.meta, 'd'));
+        out.push(L('│ ' + r.d, 'w'));
+        (r.dep || []).forEach((x) => out.push(L(x[1].slice(0, 10) + '…' + x[1].slice(-6), 'g', { pre: '│ ' + x[0] + T(' on Sepolia ↗ ', ' en Sepolia ↗ '), href: 'https://sepolia.etherscan.io/address/' + x[1] })));
+        if (r.noLink) out.push(L(T('└─ repo: private while in development', '└─ repo: privado mientras está en desarrollo'), 'a'));
+        else out.push(L(r.n, 'g', { pre: '└─ ↗ ', href: this.gh(r.n) }));
+      }
+    }
+    else if (k === 'experience') {
+      out.push(L('PID   ROLE                                      ORG', 'd'));
+      out.push(L('0x01  Founder & CTO                            Verity Protocol (' + T('since', 'desde') + ' Nov 2026)', 'g'));
+      out.push(L(T('      └ cryptographic provenance for digital media: evidence generated at capture, independently verifiable', '      └ procedencia criptográfica de medios digitales: evidencia generada en la captura, verificable de forma independiente'), 'm'));
+      out.push(L('0x02  CISO | Blockchain Lead & Co-founder      HackChain (' + T('since', 'desde') + ' Jul 2025)', 'g'));
+      out.push(L(T('      └ leading a four-person internal audit team of engineers', '      └ dirijo un equipo interno de auditoría de cuatro ingenieros'), 'm'));
+      out.push(L('0x03  Head of Systems, Cybersecurity & DI      OH Casas Modulares (' + T('since', 'desde') + ' Aug 2026)', 'w'));
+      out.push(L('0x04  Technical Content Writer                 BACS (2026)', 'w'));
+    }
+    else if (k === 'skills') {
+      [['smart contracts', 'Solidity · Foundry · OpenZeppelin v5 · Polygon · wagmi/viem'], ['governance', 'ISO 27001-aligned practice · NIST / CIS / ENS · risk & audit coordination'], ['offensive', 'Kali · Burp Suite · OWASP ZAP · ESP32 hardware'], ['infra', 'AWS · Docker · MySQL · Bash'], ['code', 'TypeScript · JavaScript · Python · C++']]
+        .forEach((x) => out.push(L('[' + x[0].padEnd(15, ' ') + '] ' + x[1], 'm')));
+    }
+    else if (k === 'certs') {
+      out.push(L('[✓] CRTOM', 'g')); out.push(L('[✓] Cisco CCST', 'g'));
+      out.push(L(T('[✓] Cybersecurity technical qualification — Google / Fundae', '[✓] Cualificación técnica en ciberseguridad — Google / Fundae'), 'g'));
+      out.push(L(T('[i] CyberOps Associate & CCNA — Cisco Talent Factory scholarship', '[i] CyberOps Associate y CCNA — beca Cisco Talent Factory'), 'm'));
+      out.push(L(T("[~] Master's in Blockchain Dev, DeFi Security (Blockchain Accelerator) .. in progress", '[~] Máster en Desarrollo Blockchain, Seguridad DeFi (Blockchain Accelerator) .. en curso'), 'a'));
+    }
+    else if (k === 'writing') {
+      const B = 'https://bacsociety.com/en/';
+      out.push(L(T('PUBLISHED @ BACS — Blockchain Arbitration & Commerce Society', 'PUBLICADO EN BACS — Blockchain Arbitration & Commerce Society'), 'g'));
+      out.push(L('When the bricks break on-chain: security risks in RWA tokenisation', 'g', { pre: '  2026-10-01 ↗ ', href: B + 'security-risks-rwa-tokenisation/' }));
+      out.push(L("Kleros: Can Decentralized Justice Solve the Internet's Small Claims Problem?", 'g', { pre: '  2026-07-14 ↗ ', href: B + 'kleros-can-decentralized-justice-solve-the-internets-small-claims-problem/' }));
+      out.push(L('Legal oracles: security challenges in introducing legal data on-chain', 'g', { pre: '  2026-06-25 ↗ ', href: B + 'legal-oracles-security-challenges-in-introducing-legal-data-on-chain/' }));
+      out.push(L(T('all articles', 'todos los artículos'), 'g', { pre: T('  author page ↗ ', '  página de autora ↗ '), href: B + 'author/ainhoa-lopez-perello/' }));
+    }
+    else if (k === 'events' || k === 'talks') {
+      out.push(L(T('EVENT LOG', 'REGISTRO DE EVENTOS'), 'g'));
+      out.push(L('[TALK]      IMMUNE Technology Institute · May 13, 2026', 'c'));
+      out.push(L(T('            Talk on blockchain and smart contract security.', '            Charla sobre blockchain y seguridad en smart contracts.'), 'w'));
+      out.push(L('[HACKATHON] ETHOnline 2026 · ETHGlobal · ' + T('September', 'septiembre'), 'c'));
+      out.push(L(T('            Registered as a hacker and started Onchain Sentinel there.', '            Me registré como hacker y empecé Onchain Sentinel allí.'), 'w'));
+      out.push(L(T('            The team fell through before submission, so I kept building', '            El equipo se deshizo antes de la entrega, así que seguí'), 'w'));
+      out.push(L(T('            it solo as a product. Run: cat 2', '            construyéndolo sola como producto. Ejecuta: cat 2'), 'w'));
+    }
+    else if (k === 'languages') {
+      out.push(L('es-ES  ██████████  ' + T('native', 'nativo'), 'g'));
+      out.push(L('en-GB  ████████░░  B2 · ' + T('professional working proficiency · C1 in progress', 'competencia profesional · C1 en curso'), 'g'));
+      out.push(L('zh-CN  ██░░░░░░░░  A1 · ' + T('learning (中文)', 'aprendiendo (中文)'), 'a'));
+      out.push(L('sol    ██████████  ' + T('fluent, unfortunately for attackers', 'fluido, por desgracia para los atacantes'), 'c'));
+    }
+    else if (k === 'bounties') {
+      out.push(L('$ sherlock status', 'd'));
+      out.push(L(T('  first targets .. stablecoin programmes (Usual Labs, Monolith)', '  primeros objetivos .. programas de stablecoins (Usual Labs, Monolith)'), 'm'));
+      out.push(L(T('  status ......... queued — starting now; findings will land here', '  estado ........... en cola — empezando ya; los hallazgos aparecerán aquí'), 'a'));
+    }
+    else if (k === 'cv' || k === 'resume') {
+      out.push(L('Ainhoa_Lopez_Perello_CV.pdf', 'g', { pre: T('  download ↗ ', '  descargar ↗ '), href: 'Ainhoa_Lopez_Perello_CV.pdf' }));
+    }
+    else if (k === 'audit') {
+      out.push(L(T('replaying audit: SistemaVotacion.sol · solc 0.8.34 · Ethereum Sepolia', 'repitiendo auditoría: SistemaVotacion.sol · solc 0.8.34 · Ethereum Sepolia'), 'd'));
+      out.push(L('  ▓▓▓░░░░░░░  Remix Solidity Analyzer ..... 15 ' + T('issues reviewed', 'avisos revisados'), 'm', { delay: 350 }));
+      out.push(L('  ▓▓▓▓▓▓░░░░  Solhint ...................... 13 ' + T('warnings reviewed', 'warnings revisados'), 'm', { delay: 750 }));
+      out.push(L('  ▓▓▓▓▓▓▓▓░░  SWC Registry pattern match ... ' + T('done', 'hecho'), 'm', { delay: 1150 }));
+      out.push(L('  ▓▓▓▓▓▓▓▓▓▓  ' + T('manual line-by-line review .. done', 'revisión manual línea a línea .. hecho'), 'm', { delay: 1550 }));
+      out.push(L(' ', 'm', { delay: 1650 }));
+      out.push(L('  [CRITICAL-01] Reentrancy in retirarFondos() · SWC-107 .......... REMEDIATED', 'r', { delay: 1900 }));
+      out.push(L(T('                ETH sent before state update → contract drained.', '                ETH enviado antes de actualizar el estado → contrato vaciado.'), 'w', { delay: 2000 }));
+      out.push(L(T('                PoC Atacante.sol exploited it on Sepolia; fixed with CEI + guard.', '                La PoC Atacante.sol lo explotó en Sepolia; corregido con CEI + guard.'), 'w', { delay: 2100 }));
+      out.push(L('  [MEDIUM-01]   Block timestamp dependence · SWC-116 ......... acknowledged', 'a', { delay: 2400 }));
+      out.push(L('  [MEDIUM-02]   Unbounded loop in ganador() · SWC-128 ......... acknowledged', 'a', { delay: 2650 }));
+      out.push(L('  [LOW-01]      Low-level call usage (return value checked) .. acknowledged', 'c', { delay: 2900 }));
+      out.push(L('  [INFO-01]     Missing zero-address validation .............. REMEDIATED', 'm', { delay: 3150 }));
+      out.push(L(' ', 'm', { delay: 3250 }));
+      out.push(L('  summary: 1 critical · 2 medium · 1 low · 1 info', 'g', { delay: 3400 }));
+      out.push(L('SECURITY-AUDIT.md', 'g', { delay: 3600, pre: T('  full report ↗ ', '  informe completo ↗ '), href: this.AUDIT }));
+      out.push(L(T('  → now watch the bug in action: exploit', '  → ahora mira el fallo en acción: exploit'), 'c', { delay: 3800 }));
+    }
+    else if (k === 'exploit') {
+      let d = 0; const step = (ms) => (d += ms);
+      const V = 'Vault';
+      out.push(L(T('SIMULATION · classic reentrancy (SWC-107), the bug class behind The DAO hack', 'SIMULACIÓN · reentrancy clásica (SWC-107), el fallo detrás del hackeo de The DAO'), 'd'));
+      out.push(L(' ', 'm'));
+      out.push(L('function withdraw() external {', 'w', { delay: step(200) }));
+      out.push(L('    uint256 bal = balances[msg.sender];', 'w', { delay: step(80) }));
+      out.push(L('    (bool ok, ) = msg.sender.call{value: bal}("");   ' + T('// ❌ interaction first', '// ❌ primero la interacción'), 'r', { delay: step(80) }));
+      out.push(L('    balances[msg.sender] = 0;                         ' + T('// ❌ effect too late', '// ❌ el efecto llega tarde'), 'r', { delay: step(80) }));
+      out.push(L('}', 'w', { delay: step(80) }));
+      out.push(L(' ', 'm', { delay: step(100) }));
+      out.push(L('$ deploy ' + V + '.sol ............ ' + V + ' ' + T('holds', 'tiene') + ' 10.0 ETH ' + T('from honest users', 'de usuarios honestos'), 'm', { delay: step(400) }));
+      out.push(L('$ attacker.deposit{value: 1 ETH}()  ' + V + ' = 11.0 ETH', 'm', { delay: step(400) }));
+      out.push(L('$ attacker.attack()', 'a', { delay: step(400) }));
+      for (let i = 1; i <= 11; i++) {
+        const left = 11 - i;
+        out.push(L('  [' + String(i).padStart(2, '0') + '] withdraw() → send 1.0 ETH → receive() → re-enter   ' + V + ' ' + this.bar(left, 11, 22) + ' ' + left.toFixed(1) + ' ETH', left === 0 ? 'r' : 'a', { delay: step(230) }));
+      }
+      out.push(L(T('  💀 vault drained: 11.0 ETH taken with a 1.0 ETH deposit', '  vault vaciado: 11.0 ETH robados con un depósito de 1.0 ETH').replace('💀 ', ''), 'r', { delay: step(450) }));
+      out.push(L(' ', 'm', { delay: step(200) }));
+      out.push(L(T('$ patch: Checks-Effects-Interactions + reentrancy guard', '$ parche: Checks-Effects-Interactions + guard de reentrancy'), 'g', { delay: step(500) }));
+      out.push(L('function withdraw() external nonReentrant {', 'w', { delay: step(150) }));
+      out.push(L('    uint256 bal = balances[msg.sender];', 'w', { delay: step(80) }));
+      out.push(L('    balances[msg.sender] = 0;                         ' + T('// ✓ effect first', '// ✓ primero el efecto'), 'g', { delay: step(80) }));
+      out.push(L('    (bool ok, ) = msg.sender.call{value: bal}("");   ' + T('// ✓ interaction last', '// ✓ la interacción al final'), 'g', { delay: step(80) }));
+      out.push(L('    require(ok);', 'w', { delay: step(80) }));
+      out.push(L('}', 'w', { delay: step(80) }));
+      out.push(L(' ', 'm', { delay: step(100) }));
+      out.push(L('$ attacker.attack()', 'a', { delay: step(450) }));
+      out.push(L('  [01] withdraw() → send 1.0 ETH → receive() → re-enter', 'a', { delay: step(300) }));
+      out.push(L('  [02] REVERT ReentrancyGuardReentrantCall() → ' + T('whole transaction reverted', 'transacción revertida entera'), 'g', { delay: step(400) }));
+      out.push(L('  ' + V + ' ' + this.bar(11, 11, 22) + ' 11.0 ETH · ' + T('funds safe', 'fondos a salvo'), 'g', { delay: step(300) }));
+      out.push(L(' ', 'm', { delay: step(150) }));
+      out.push(L(T('I exploited and fixed this exact bug class in a real audit:', 'Exploté y corregí esta misma clase de fallo en una auditoría real:'), 'c', { delay: step(300) }));
+      out.push(L('SistemaVotacion · SECURITY-AUDIT.md', 'g', { delay: step(150), pre: '  ↗ ', href: this.AUDIT }));
+    }
+    else if (k === 'contact') {
+      out.push(L('linkedin.com/in/ainhoa-lópez-perelló', 'g', { pre: '  linkedin  ↗ ', href: LI }));
+      out.push(L('github.com/Noahlp125', 'g', { pre: '  github    ↗ ', href: 'https://github.com/Noahlp125' }));
+      out.push(L('noah84048@gmail.com', 'g', { pre: '  email     ✉ ', href: 'mailto:noah84048@gmail.com' }));
+    }
+    else if (k === 'sudo') {
+      if (arg.toLowerCase() === 'hire-me') {
+        out.push(L(T('[sudo] password for recruiter: ********', '[sudo] contraseña para reclutador: ********'), 'd'));
+        out.push(L(T('Access granted. Good call.', 'Acceso concedido. Buena decisión.'), 'g', { delay: 700 }));
+        out.push(L('linkedin.com/in/ainhoa-lópez-perelló', 'g', { delay: 1100, pre: T('  opening channel ↗ ', '  abriendo canal ↗ '), href: LI }));
+      } else out.push(L(T('sudo: nice try. This incident will be reported.', 'sudo: buen intento. Este incidente será reportado.'), 'r'));
+    }
+    else if (k === 'rm') out.push(L(T("rm: permission denied. I audit things, I don't let them get deleted.", 'rm: permiso denegado. Yo audito cosas, no dejo que se borren.'), 'r'));
+    else if (k === 'date') out.push(L(new Date().toUTCString(), 'w'));
+    else if (k === 'echo') out.push(L(arg, 'w'));
+    else out.push(L('zsh: command not found: ' + head + T('  — type help', '  — escribe help'), 'r'));
+    return out;
+  }
+
+  setLangUI() {
+    document.getElementById('quickRun').textContent = this.T('QUICK RUN:', 'EJECUCIÓN RÁPIDA:');
+    document.documentElement.lang = this.state.lang;
+    const chips = document.getElementById('chips'); chips.innerHTML = '';
+    ['recruiter', 'help', 'ls', 'audit', 'exploit', 'events', 'cv', 'contact', this.state.lang === 'es' ? 'lang en' : 'lang es', 'clear'].forEach((c) => {
+      const b = document.createElement('button'); b.className = 'chip'; b.textContent = c;
+      b.addEventListener('click', () => this.exec(c)); chips.appendChild(b);
+    });
+  }
+  renderLine(l) {
+    const div = document.createElement('div');
+    div.className = 'in ln'; div.style.color = l.c; div.style.animationDelay = (l.delay || 0) + 'ms';
+    if (l.hang) { div.style.paddingLeft = '13ch'; div.style.textIndent = '-13ch'; }
+    if (l.href) {
+      const pre = document.createElement('span'); pre.textContent = l.pre || ''; div.appendChild(pre);
+      const a = document.createElement('a'); a.href = l.href; a.textContent = l.t; a.style.textUnderlineOffset = '3px';
+      if (/^https?:/.test(l.href)) { a.target = '_blank'; a.rel = 'noopener'; }
+      div.appendChild(a);
+    } else div.textContent = l.t;
+    return div;
+  }
+  exec(raw, extra) {
+    const cmd = (raw || '').trim();
+    const linesEl = document.getElementById('lines');
+    if (cmd.toLowerCase() === 'clear') { linesEl.innerHTML = ''; this.state.runs++; this.after(0); return; }
+    if (cmd.toLowerCase() === 'exit') { this.show('boot'); return; }
+    const pre = extra || [];
+    const base = pre.reduce((m, l) => Math.max(m, l.delay || 0), 0);
+    const echo = this.L('ainhoa@sec-node:~$ ' + cmd, 'g', { delay: base ? base + 120 : 0 });
+    this.pendingLang = null;
+    const out = this.run(cmd).map((l) => Object.assign({}, l, { delay: (l.delay || 0) + (base ? base + 250 : 0) }));
+    const maxDelay = out.reduce((m, l) => Math.max(m, l.delay || 0), echo.delay || 0);
+    const frag = document.createDocumentFragment();
+    pre.concat([echo], out, [this.L(' ', 'm', { delay: maxDelay })]).forEach((l) => frag.appendChild(this.renderLine(l)));
+    linesEl.appendChild(frag);
+    if (cmd) { this.state.hist.push(cmd); this.state.runs++; }
+    this.state.hIdx = -1;
+    if (this.pendingLang) { this.state.lang = this.pendingLang; this.setLangUI(); }
+    this.after(maxDelay + 120);
+  }
+  after(delay) {
+    document.getElementById('runs').textContent = this.state.runs;
+    const input = document.getElementById('cmd'); input.value = '';
+    const prompt = document.getElementById('prompt'); const log = document.getElementById('log');
+    prompt.style.visibility = 'hidden';
+    clearTimeout(this.pt); this.pt = setTimeout(() => { prompt.style.visibility = 'visible'; input.focus({ preventScroll: true }); }, delay);
+    for (let t = 0; t <= delay + 400; t += 200) setTimeout(() => { log.scrollTop = log.scrollHeight; }, t);
+  }
+  show(which) {
+    document.getElementById('boot').classList.toggle('hidden', which !== 'boot');
+    document.getElementById('term').classList.toggle('hidden', which !== 'term');
+    window.scrollTo(0, 0);
+  }
+  boot(first) {
+    const L = (t, c, d) => this.L(t, c, { delay: d });
+    const T = (a, b) => this.T(a, b);
+    const seq = [
+      L('[    0.000] booting SecurityOS kernel 6.1-alp ...', 'd', 0),
+      L('[    0.212] mounting /dev/solidity ............ ok', 'd', 180),
+      L('[    0.488] loading foundry toolchain ......... ok', 'd', 360),
+      L('[    0.731] syncing github.com/Noahlp125 ...... 12 repos', 'd', 560),
+      L('[    0.904] firewall: up · IDS: up · paranoia: max', 'd', 760),
+      L('[    0.990] hidden files detected: 1', 'd', 860),
+      L(' ', 'm', 920),
+      L(T("Welcome, visitor. You are now inside Ainhoa's machine.", 'Bienvenida/o. Estás dentro de la máquina de Ainhoa.'), 'g', 1020),
+      L(T('Recruiter? Type recruiter. Everyone else: help.', '¿Reclutador? Escribe recruiter. Para todo lo demás: help.'), 'm', 1140),
+      L(' ', 'm', 1190)
+    ];
+    document.getElementById('lines').innerHTML = '';
+    this.show('term');
+    this.exec(first || 'neofetch', seq);
+  }
+  init() {
+    const pad = (n) => String(n).padStart(2, '0');
+    const tick = () => { const d = new Date(); const c = pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()); document.querySelectorAll('.clock').forEach((e) => { e.textContent = c; }); };
+    tick(); setInterval(tick, 1000);
+    const langs = document.getElementById('langs');
+    [['Solidity', 5], ['JavaScript', 2], ['TypeScript', 2], ['Python', 1], ['C++', 1]].forEach((x) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:grid;grid-template-columns:84px 1fr 20px;gap:8px;align-items:center;margin-bottom:8px';
+      row.innerHTML = '<span style="color:#7FD9A0"></span><span style="height:8px;background:#0F2A18;position:relative"><span class="glow" style="position:absolute;left:0;top:0;bottom:0;background:#39FF7A;width:' + (x[1] / 5 * 100) + '%"></span></span><span style="text-align:right"></span>';
+      row.children[0].textContent = x[0]; row.children[2].textContent = x[1];
+      langs.appendChild(row);
+    });
+    this.setLangUI();
+    document.getElementById('access').addEventListener('click', () => this.boot());
+    document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => this.boot(b.dataset.go)));
+    document.getElementById('logout').addEventListener('click', () => this.exec('exit'));
+    const input = document.getElementById('cmd');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); this.exec(input.value); }
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        const h = this.state.hist; if (!h.length) return;
+        e.preventDefault();
+        let i = this.state.hIdx === -1 ? h.length : this.state.hIdx;
+        i = e.key === 'ArrowUp' ? Math.max(0, i - 1) : Math.min(h.length, i + 1);
+        this.state.hIdx = i === h.length ? -1 : i; input.value = i === h.length ? '' : h[i];
+      } else if (e.key === 'Tab') {
+        const v = input.value.toLowerCase();
+        const all = ['recruiter', 'help', 'whoami', 'neofetch', 'ls', 'cat ', 'experience', 'skills', 'certs', 'writing', 'events', 'languages', 'bounties', 'cv', 'audit', 'exploit', 'contact', 'lang ', 'sudo hire-me', 'clear', 'exit'];
+        const m = v && all.find((c) => c.startsWith(v));
+        if (m) { e.preventDefault(); input.value = m; }
+      }
+    });
+    document.getElementById('log').addEventListener('mouseup', () => { if (!window.getSelection().toString()) input.focus({ preventScroll: true }); });
+  }
+}
+const app = new Portfolio(); app.init();
+console.log('%c> you are curious. good. try: ls -a', 'color:#39FF7A;font-family:monospace');
+</script>
+</body>
+</html>
